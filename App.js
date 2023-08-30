@@ -1,20 +1,58 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { NavigationContainer } from "@react-navigation/native";
+import * as IconsOutline from "react-native-heroicons/outline";
+import * as IconsSolid from "react-native-heroicons/solid";
+import { CART, FAVOURITE, HOME, PROFILE } from "./src/configs";
+import Cart from "./src/screens/cart";
+import Favourite from "./src/screens/favourite";
+import Home from "./src/screens/home";
+import Profile from "./src/screens/profile";
+const Tab = createBottomTabNavigator();
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <NavigationContainer>
+      <Tab.Navigator
+        headerMode="screen"
+        initialRouteName={"home"}
+        screenOptions={({ route }) => ({
+          tabBarIcon: ({ focused, color, size }) => {
+            if (route.name === HOME) {
+              return !focused ? (
+                <IconsOutline.HomeIcon color={"#9775FA"} />
+              ) : (
+                <IconsSolid.HomeIcon color={"#9775FA"} />
+              );
+            } else if (route.name === FAVOURITE) {
+              return !focused ? (
+                <IconsOutline.HeartIcon color={"#9775FA"} />
+              ) : (
+                <IconsSolid.HeartIcon color={"#9775FA"} />
+              );
+            } else if (route.name === CART) {
+              return !focused ? (
+                <IconsOutline.ShoppingBagIcon color={"#9775FA"} />
+              ) : (
+                <IconsSolid.ShoppingBagIcon color={"#9775FA"} />
+              );
+            } else if (route.name === PROFILE) {
+              return !focused ? (
+                <IconsOutline.UserIcon color={"#9775FA"} />
+              ) : (
+                <IconsSolid.UserIcon color={"#9775FA"} />
+              );
+            }
+          },
+          tabBarActiveTintColor: "#9775FA",
+          tabBarInactiveTintColor: "gray",
+          headerShown: false,
+        })}
+      >
+        <Tab.Screen name={HOME} component={Home} />
+        <Tab.Screen name={FAVOURITE} component={Favourite} />
+        <Tab.Screen name={CART} component={Cart} />
+        <Tab.Screen name={PROFILE} component={Profile} />
+      </Tab.Navigator>
+    </NavigationContainer>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
