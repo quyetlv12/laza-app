@@ -1,10 +1,12 @@
-import { View, Text } from 'react-native'
+import { View, Text, SafeAreaView } from 'react-native'
 import React from 'react'
 
 const DetailProduct = () => {
   return (
     <View>
-      <Text>DetailProduct</Text>
+     <SafeAreaView>
+        <Text>Cart</Text>
+      </SafeAreaView>
     </View>
   )
 }

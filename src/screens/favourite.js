@@ -1,10 +1,12 @@
-import { View, Text } from 'react-native'
+import { View, Text, SafeAreaView } from 'react-native'
 import React from 'react'
 
 const Favourite = () => {
   return (
     <View>
-      <Text>Favourite</Text>
+      <SafeAreaView>
+        <Text>Cart</Text>
+      </SafeAreaView>
     </View>
   )
 }
