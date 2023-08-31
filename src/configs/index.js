@@ -1,4 +1,6 @@
 export const HOME = 'Home'
+export const HOME_STACK = 'HomeStack'
 export const FAVOURITE = 'Favourite'
 export const CART = 'Cart'
 export const PROFILE = 'Profile'
+export const PRODUCT_DEATAIL = 'ProductDetail'
