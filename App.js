@@ -14,8 +14,7 @@ export default function App() {
   return (
     <NavigationContainer>
       <Tab.Navigator
-        headerMode="screen"
-        initialRouteName={"home"}
+        initialRouteName={HOME}
         screenOptions={({ route }) => ({
           tabBarIcon: ({ focused, color, size }) => {
             if (route.name === HOME_STACK) {
@@ -47,6 +46,13 @@ export default function App() {
           tabBarActiveTintColor: "#9775FA",
           tabBarInactiveTintColor: "gray",
           headerShown: false,
+          animationEnabled: true,
+          lazy : true,
+          tabBarShowLabel : true,
+          tabBarLabelStyle : {
+            fontWeight : 700,
+
+          }
         })}
       >
         <Tab.Screen name={HOME_STACK} component={HomeStack} options={{title : "Home"}} />

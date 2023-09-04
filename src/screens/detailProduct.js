@@ -1,19 +1,13 @@
-import { View, Text, SafeAreaView, FlatList } from "react-native";
 import React from "react";
-import { useNavigation } from "@react-navigation/native";
-import { Image } from "react-native";
-import { TouchableOpacity } from "react-native";
+import { Image, SafeAreaView, ScrollView, Text, TouchableOpacity, View } from "react-native";
 import * as IconsOutline from "react-native-heroicons/outline";
-import { ScrollView } from "react-native";
 import TextStyle from "../components/text";
+import { CART } from "../configs";
 
 const DetailProduct = ({ navigation, route }) => {
-  // {"id": 1, "img": "https://images.unsplash.com/photo-1608444265903-d7883082872b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1372&q=80", "name": "Nike Sportswear Club Fleece", "price": "99"}
   const { item } = route.params;
-  console.log("item", item);
   return (
-    <View className="bg-white h-full">
-      <SafeAreaView>
+      <SafeAreaView className="bg-white">
         <ScrollView showsVerticalScrollIndicator={false}>
           <View className="relative">
             <View className="flex flex-row justify-between h-12 items-center mb-5 mt-5 absolute w-full z-50 p-5">
@@ -23,7 +17,7 @@ const DetailProduct = ({ navigation, route }) => {
               >
                 <IconsOutline.ArrowLeftIcon color={"#000"} />
               </TouchableOpacity>
-              <TouchableOpacity className="bg-[#F5F6FA] p-4 rounded-full">
+              <TouchableOpacity className="bg-[#F5F6FA] p-4 rounded-full"  onPress={() => navigation.navigate(CART)}>
                 <IconsOutline.ShoppingBagIcon color={"#000"} />
               </TouchableOpacity>
             </View>
@@ -140,7 +134,6 @@ const DetailProduct = ({ navigation, route }) => {
           </View>
         </ScrollView>
       </SafeAreaView>
-    </View>
   );
 };
 
