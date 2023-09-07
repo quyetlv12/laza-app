@@ -1,7 +1,7 @@
 import { View, Text } from "react-native";
 import React from "react";
 
-const TextStyle = ({ content, size = 16, className, type = "bold" }) => {
+const TextStyle = ({ content, size = 16, className, type}) => {
   return (
     <Text
       className={`${

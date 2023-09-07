@@ -5,25 +5,27 @@ import CardHorizontal from "../components/cardHorizontal";
 import * as IconsOutline from "react-native-heroicons/outline";
 import PaymentType from "../components/paymentType";
 import InfoPaymentRow from "../components/infoPaymentRow";
+import { useNavigation } from "@react-navigation/native";
+import { INFO_PAYMENT, PAYMENT_STATUS } from "../configs";
 
 const Cart = () => {
   const deliveryIcon = require('../../assets/cart/delivery.png')
   const paymentTypeIcon = require('../../assets/cart/visa.png')
+  const navigation = useNavigation()
   const handleCheckout = () => {
-    Alert.alert(
-      'Notification',
-      "Order success !"
-    )
+    navigation.navigate(INFO_PAYMENT)
   }
 
   return (
-    <SafeAreaView style={{ flex: 1 }} forceInset={{ bottom: 'never' }} className="bg-white">
-    <DirectionalTop />
+    <SafeAreaView style={{ flex: 1 }} className="bg-white">
+    <DirectionalTop title="Cart" />
       {/* ======================ITEM =========== */}
       <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{flex: 0}} className="px-2">
+     <View className="px-2">
+     <CardHorizontal />
         <CardHorizontal />
         <CardHorizontal />
-        <CardHorizontal />
+     </View>
         <View className="flex flex-row items-center justify-between mb-3">
           <Text className="font-bold text-[17px]">
             Delivery Address
@@ -56,7 +58,7 @@ const Cart = () => {
         </View>
         {/* ============================== */}
         <View>
-          <TouchableOpacity className="bg-indigo-500  py-4 rounded-lg shadow-sm mt-5" onPress={handleCheckout}>
+          <TouchableOpacity activeOpacity={.7}className="bg-indigo-500  py-4 rounded-lg shadow-sm mt-5" onPress={handleCheckout}>
             <Text className="text-center text-white uppercase text-sm font-bold">Checkout</Text>
           </TouchableOpacity>
         </View>

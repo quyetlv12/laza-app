@@ -3,18 +3,18 @@ import React from "react";
 import * as IconsOutline from "react-native-heroicons/outline";
 import { TouchableOpacity } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import { PRODUCT_DEATAIL } from "../configs";
+import { FAVOURITE, PRODUCT_DEATAIL } from "../configs";
 import { Alert } from "react-native";
 
-const Card = ({ item }) => {
+const Card = ({ item, page }) => {
   const navigation = useNavigation();
 
   const hanleClickItem = () => {
-    console.log("item", item);
-    navigation.push(PRODUCT_DEATAIL, {
+    navigation.navigate(PRODUCT_DEATAIL, {
       item: item,
     });
   };
+  const shouldLikeIconStatus = page !== FAVOURITE;
   const handleFavourite = () => {
     Alert.alert("Đã thêm vào danh sách yêu thích");
   };
@@ -32,12 +32,14 @@ const Card = ({ item }) => {
         />
         <Text className="max-w-full mb-2">{item.name}</Text>
         <Text className="font-bold text-[#1D1E20]">$ {item.price}</Text>
-        <TouchableOpacity
-          className="absolute top-[5%] right-[5%] bg-white rounded-[50%] p-1"
-          onPress={handleFavourite}
-        >
-          <IconsOutline.HeartIcon color={"#8F959E"} />
-        </TouchableOpacity>
+        {shouldLikeIconStatus && (
+          <TouchableOpacity
+            className="absolute top-[5%] right-[5%] bg-white rounded-full p-1"
+            onPress={handleFavourite}
+          >
+            <IconsOutline.HeartIcon color={"#8F959E"} />
+          </TouchableOpacity>
+        )}
       </View>
     </TouchableOpacity>
   );

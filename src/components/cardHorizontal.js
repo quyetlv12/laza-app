@@ -4,7 +4,7 @@ import * as IconsOutline from "react-native-heroicons/outline";
 
 const CardHorizontal = () => {
     return (
-        <View className="bg-[#FEFEFE] py-5 px-2 rounded-lg shadow-md mb-5">
+        <View className="bg-[#FEFEFE] py-5 px-2 rounded-lg shadow-sm mb-5 mt-2">
             <View className='flex flex-row gap-4 items-center'>
                 <Image source={require('../../assets/products/item1.png')} className="w-20 h-20 rounded-lg" />
                 <View>
