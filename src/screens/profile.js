@@ -15,7 +15,6 @@ import { Alert } from "react-native";
 import { useLogged } from "../hooks";
 
 const Profile = ({ navigation, route }) => {
-  const logged = useLogged()
   const handleLogout = () => {
     Alert.alert("Thông báo", "Đăng xuất thành công !");
   };    

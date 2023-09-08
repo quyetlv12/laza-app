@@ -2,11 +2,12 @@ import { View, Text, TouchableOpacity, StyleSheet } from 'react-native'
 import React from 'react'
 import * as IconsOutline from "react-native-heroicons/outline";
 import { useNavigation, useRoute } from '@react-navigation/native';
-import { CART, FAVOURITE, HOME } from '../configs';
+import { CART, FAVOURITE, HOME, LOGIN } from '../configs';
 
 const DirectionalTop = ({title = ""}) => {
     const navigation = useNavigation();
     const route = useRoute()
+    const shouldShowRightIconName =  route.name === CART || route.name === LOGIN
     return (
         <View className="bg-white">
             <View className="flex flex-row justify-between h-10 items-center mb-5 mt-5 w-full z-50 px-3">
@@ -22,7 +23,7 @@ const DirectionalTop = ({title = ""}) => {
                     onPress={() => navigation.navigate(route.name === CART ? HOME : CART)}
                 >
                     {
-                        route.name === CART ? <IconsOutline.HomeIcon color={"#000"} /> : <IconsOutline.ShoppingBagIcon color={"#000"} />
+                        shouldShowRightIconName ? <IconsOutline.HomeIcon color={"#000"} /> : <IconsOutline.ShoppingBagIcon color={"#000"} />
                     }
                 </TouchableOpacity>
             </View>

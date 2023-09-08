@@ -7,16 +7,19 @@ import Signup from "../screens/signup";
 import { useLogged } from "../hooks";
 const Stack = createStackNavigator();
 const UserStack = () => {
-  const status = useLogged()
-  // console.log("status" , status);
+  const { status } = useLogged();
   return (
-    <Stack.Navigator
-      screenOptions={{ headerShown: false }}
-    //   initialRouteName={LOGIN}
-    >
-      <Stack.Screen name={LOGIN} component={Login} />
-      <Stack.Screen name={PROFILE} component={Profile} />
-      <Stack.Screen name={SIGNUP} component={Signup} />
+    <Stack.Navigator screenOptions={{ headerShown: false }}>
+      {status ? (
+        <>
+          <Stack.Screen name={PROFILE} component={Profile} />
+        </>
+      ) : (
+        <>
+          <Stack.Screen name={LOGIN} component={Login} />
+          <Stack.Screen name={SIGNUP} component={Signup} />
+        </>
+      )}
     </Stack.Navigator>
   );
 };
