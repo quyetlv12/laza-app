@@ -3,9 +3,15 @@
     "name": "ecommerce-app",
     "slug": "ecommerce-app",
     "version": "1.0.0",
+    "sdkVersion": "49.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
+    "updates": {
+      "fallbackToCacheTimeout": 0,
+      "checkAutomatically": "ON_LOAD",
+      "useClassicUpdates": true
+    },
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
