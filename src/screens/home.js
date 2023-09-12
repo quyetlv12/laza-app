@@ -5,6 +5,7 @@ import Card from "../components/card";
 import TextStyle from "../components/text";
 import { CART, CATEGORY_ITEMS, PROFILE, data, fashionBrands } from "../configs";
 import { Keyboard } from "react-native";
+import DirectionalTop from "../components/directionalTop";
 
 const Home = ({ navigation, route }) => {
   return (
@@ -14,14 +15,7 @@ const Home = ({ navigation, route }) => {
           <View>
             <StatusBar barStyle="dark-content" />
           </View>
-          <View className="flex flex-row justify-between h-12 items-center mb-5 mt-5">
-            <TouchableOpacity activeOpacity={.7}className="bg-[#F5F6FA] p-4 rounded-full"  onPress={() => navigation.navigate(PROFILE)}>
-              <IconsOutline.UserIcon color={"#000"} />
-            </TouchableOpacity>
-            <TouchableOpacity activeOpacity={.7}className="bg-[#F5F6FA] p-4 rounded-full" onPress={() => navigation.navigate(CART)}>
-              <IconsOutline.ShoppingBagIcon color={"#000"} />
-            </TouchableOpacity>
-          </View>
+          <DirectionalTop />
 
           <View className="mb-5">
           <TextStyle content={'Hello'} type={'bold'} />
@@ -29,10 +23,10 @@ const Home = ({ navigation, route }) => {
           </View>
           {/* SEARCH BOX */}
           <View className="flex flex-row h-14 gap-2 mb-5">
-            <View className="w-[80%]">
-              <TextInput placeholder="Search..." className="h-full bg-[#F5F6FA] px-5" onSubmitEditing={Keyboard.dismiss} sub/>
+            <View className="w-[80%] ">
+              <TextInput placeholder="Search..." className="h-full bg-[#F5F6FA] px-5 rounded-lg" onSubmitEditing={Keyboard.dismiss} sub/>
             </View>
-            <TouchableOpacity activeOpacity={.7} className="bg-[#9775FA] flex items-center justify-center px-3">
+            <TouchableOpacity activeOpacity={.7} className="bg-[#9775FA] flex items-center justify-center px-3 rounded-lg">
               <Text className=""> <IconsOutline.MicrophoneIcon color={'#fff'} /></Text>
             </TouchableOpacity>
           </View>

@@ -1,6 +1,6 @@
 import { View, Text, SafeAreaView, ScrollView, TouchableOpacity, Alert, Dimensions } from "react-native";
 import React from "react";
-import DirectionalTop from "../components/directionalTop";
+import DirectionalTop from '../components/directionalTop'
 import CardHorizontal from "../components/cardHorizontal";
 import * as IconsOutline from "react-native-heroicons/outline";
 import PaymentType from "../components/paymentType";

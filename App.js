@@ -10,6 +10,10 @@ import HomeStack from "./src/stacks/homeStack";
 import 'react-native-gesture-handler';
 import CartStack from "./src/stacks/cartStack";
 import UserStack from "./src/stacks/userStack";
+import { Animated } from "react-native";
+
+const av = new Animated.Value(0);
+av.addListener(() => {return});
 const Tab = createBottomTabNavigator();
 
 export default function App() {

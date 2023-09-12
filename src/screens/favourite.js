@@ -1,7 +1,7 @@
 import React from "react";
 import { SafeAreaView, View } from "react-native";
 import Card from "../components/card";
-import DirectionalTop from "../components/directionalTop";
+import DirectionalTop from '../components/directionalTop'
 import { FAVOURITE, data } from "../configs";
 import { ScrollView } from "react-native";
 import { Text } from "react-native";

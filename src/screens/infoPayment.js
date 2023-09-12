@@ -1,7 +1,7 @@
 import { View, Text, ScrollView } from "react-native";
 import React from "react";
 import { SafeAreaView } from "react-native";
-import DirectionalTop from "../components/directionalTop";
+import DirectionalTop from '../components/directionalTop'
 import Input from "../components/input";
 import { Switch } from "react-native";
 import { TouchableOpacity } from "react-native";

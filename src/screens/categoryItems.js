@@ -1,7 +1,7 @@
 import { View, Text } from "react-native";
 import React from "react";
 import { SafeAreaView } from "react-native";
-import DirectionalTop from "../components/directionalTop";
+import DirectionalTop from '../components/directionalTop'
 import { ScrollView } from "react-native-gesture-handler";
 import Card from "../components/card";
 import { data } from "../configs";

@@ -1,22 +1,27 @@
-import React from 'react'
-import { SafeAreaView, Text, View } from 'react-native'
-import DirectionalTop from '../components/directionalTop'
-import { TouchableOpacity } from 'react-native-gesture-handler'
+import React from "react";
+import { SafeAreaView, Text, View } from "react-native";
+import { TextInput, TouchableOpacity } from "react-native-gesture-handler";
+import DirectionalTop from "../components/directionalTop";
+import Input from "../components/input";
+import { ScrollView } from "react-native";
+import { Button } from "react-native";
 
 const Login = ({ navigation, route }) => {
   return (
     <SafeAreaView className="bg-white h-screen">
-     <DirectionalTop />
-     <View>
-      <Text className='text-[28px] text-center font-bold mt-[5%]'>Let’s Get Started</Text>
-      <View className='text-[5%] flex flex-col justify-center items-center'>
-        <TouchableOpacity>
-          <Text>fdfdf</Text>
-        </TouchableOpacity>
-      </View>
-     </View>
+      <DirectionalTop isShowRightButton={false} />
+      <ScrollView className="px-5">
+        <Text className="text-4xl font-bold text-center text-indigo-500">
+          Login
+        </Text>
+        <Input title="Email" className="border-2 border-indigo-300" type={'email-address'} />
+        <Input title="Password" className="border-2 border-indigo-300" secureTextEntry={true} />
+        <View>
+          <Text className="text-right text-indigo-700 font-bold underline">Forgot your password?</Text>
+        </View>
+      </ScrollView>
     </SafeAreaView>
-  )
-}
+  );
+};
 
-export default Login
+export default Login;
