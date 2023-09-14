@@ -4,9 +4,13 @@ import { TextInput, TouchableOpacity } from "react-native-gesture-handler";
 import DirectionalTop from "../components/directionalTop";
 import Input from "../components/input";
 import { ScrollView } from "react-native";
-import { Button } from "react-native";
+import Button from "../components/button";
+import { Alert } from "react-native";
 
 const Login = ({ navigation, route }) => {
+  const handleLogin = () =>{
+    Alert.alert('Đăng nhập thành công !')
+  }
   return (
     <SafeAreaView className="bg-white h-screen">
       <DirectionalTop isShowRightButton={false} />
@@ -19,6 +23,8 @@ const Login = ({ navigation, route }) => {
         <View>
           <Text className="text-right text-indigo-700 font-bold underline">Forgot your password?</Text>
         </View>
+        <Button content={'Login'} mt={5} onPress={handleLogin} />
+        
       </ScrollView>
     </SafeAreaView>
   );
