@@ -6,6 +6,8 @@ import TextStyle from "../components/text";
 import { CART, CATEGORY_ITEMS, PROFILE, data, fashionBrands } from "../configs";
 import { Keyboard } from "react-native";
 import DirectionalTop from "../components/directionalTop";
+import { selectCount } from "../redux/slices/authSlice";
+import { useSelector } from "react-redux";
 
 const Home = ({ navigation, route }) => {
   return (

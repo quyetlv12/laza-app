@@ -10,19 +10,49 @@ import {
 import * as IconsOutline from "react-native-heroicons/outline";
 import TextStyle from "../components/text";
 import { CART } from "../configs";
+import Button from "../components/button";
+import { StyleSheet } from "react-native";
+import { useDispatch, useSelector } from "react-redux";
+import { addToCart, productsInCart } from "../redux/slices/cartSlice";
+import { Alert } from "react-native";
 
 const DetailProduct = ({ navigation, route }) => {
   const { item } = route.params;
+  const [size, setSize] = useState(null);
   const [imageSelect, setImageSelect] = useState("");
+  const [quantity, setQuantity] = useState(1);
+  const products = useSelector(productsInCart);
+  const dispatch = useDispatch();
   const handleChangeImage = (link) => {
     setImageSelect(link);
+  };
+  const handleAddToCart = () => {
+    if (!size) {
+      Alert.alert("Please select size !");
+      return;
+    }
+    const _item = {
+      ...item,
+      quantity: quantity,
+      sizeSelect: size,
+    };
+    dispatch(addToCart(_item));
+    Alert.alert("Thêm vào giỏ hàng thành công !");
+  };
+  const plusQuantity = () => {
+    const qtt = quantity + 1;
+    setQuantity(qtt);
+  };
+  const minusQuantity = () => {
+    const qtt = quantity - 1;
+    setQuantity(qtt);
   };
   useEffect(() => {
     setImageSelect(item.img);
   }, []);
 
   return (
-    <SafeAreaView className="bg-white">
+    <SafeAreaView className="bg-white" style={styles.container}>
       <ScrollView showsVerticalScrollIndicator={false}>
         <View className="relative">
           <View className="flex flex-row justify-between h-12 items-center mb-5 mt-5 absolute w-full z-50 p-5">
@@ -32,12 +62,17 @@ const DetailProduct = ({ navigation, route }) => {
             >
               <IconsOutline.ArrowLeftIcon color={"#000"} />
             </TouchableOpacity>
-            <TouchableOpacity
-              className="bg-[#F5F6FA] p-4 rounded-full"
-              onPress={() => navigation.navigate(CART)}
-            >
-              <IconsOutline.ShoppingBagIcon color={"#000"} />
-            </TouchableOpacity>
+            <View className="relative">
+              <TouchableOpacity
+                className="bg-[#F5F6FA] p-4 rounded-full"
+                onPress={() => navigation.navigate(CART)}
+              >
+                <IconsOutline.ShoppingBagIcon color={"#000"} />
+              </TouchableOpacity>
+              <View className="absolute top-0 right-0  bg-red-500 flex items-center justify-center rounded-full h-6 w-6">
+                <Text className="text-white">{products.length}</Text>
+              </View>
+            </View>
           </View>
           {imageSelect && (
             <Image
@@ -70,7 +105,6 @@ const DetailProduct = ({ navigation, route }) => {
           >
             {item.listImage.map((img, index) => (
               <TouchableOpacity
-              
                 key={index}
                 onPress={() => handleChangeImage(img)}
               >
@@ -91,26 +125,20 @@ const DetailProduct = ({ navigation, route }) => {
           </TouchableOpacity>
         </View>
         <View className="gap-1 w-full flex flex-row px-5">
-          <TouchableOpacity activeOpacity={.7}className="w-3/12 bg-[#F5F6FA] h-20 rounded-xl">
-            <Text className="leading-[80px] text-center  font-bold text-[#1D1E20] ">
-              S
-            </Text>
-          </TouchableOpacity>
-          <TouchableOpacity activeOpacity={.7}className="w-3/12 bg-[#F5F6FA] h-20 rounded-xl">
-            <Text className="leading-[80px] text-center  font-bold text-[#1D1E20] ">
-              M
-            </Text>
-          </TouchableOpacity>
-          <TouchableOpacity activeOpacity={.7}className="w-3/12 bg-[#F5F6FA] h-20 rounded-xl">
-            <Text className="leading-[80px] text-center  font-bold text-[#1D1E20] ">
-              L
-            </Text>
-          </TouchableOpacity>
-          <TouchableOpacity activeOpacity={.7}className="w-3/12 bg-[#F5F6FA] h-20 rounded-xl">
-            <Text className="leading-[80px] text-center  font-bold text-[#1D1E20] ">
-              XL
-            </Text>
-          </TouchableOpacity>
+          {item?.size.map((_size, index) => (
+            <TouchableOpacity
+              activeOpacity={0.7}
+              className={`w-3/12 bg-[#F5F6FA] h-20 rounded-xl ${
+                size === _size && "border-2 border-indigo-500"
+              }`}
+              key={_size}
+              onPress={() => setSize(_size)}
+            >
+              <Text className="leading-[80px] text-center  font-bold text-[#1D1E20] ">
+                {_size}
+              </Text>
+            </TouchableOpacity>
+          ))}
         </View>
         <View className="flex flex-row items-center justify-between mb-5 px-5 mt-5">
           <TextStyle content="Description" type="title" />
@@ -131,8 +159,44 @@ const DetailProduct = ({ navigation, route }) => {
           </TouchableOpacity>
         </View>
       </ScrollView>
+      <View
+        className="flex flex-row items-center w-full py-1 bg-[#333] justify-around"
+        style={styles.fixedElement}
+      >
+        <View className="flex flex-row items-center gap-2">
+          <TouchableOpacity onPress={minusQuantity}>
+            <IconsOutline.MinusIcon size={35} />
+          </TouchableOpacity>
+          <View className="bg-gray-100 p-4 rounded-md">
+            <Text className="text-xl ">{quantity}</Text>
+          </View>
+          <TouchableOpacity onPress={plusQuantity}>
+            <IconsOutline.PlusIcon size={35} />
+          </TouchableOpacity>
+        </View>
+        <Button
+          content={"Thêm vào giỏ hàng"}
+          onPress={handleAddToCart}
+          w={"w-full"}
+          px={'px-2'}
+        />
+      </View>
     </SafeAreaView>
   );
 };
 
 export default DetailProduct;
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  fixedElement: {
+    position: "absolute",
+    bottom: 0,
+    left: 0,
+    right: 0,
+    backgroundColor: "#fff",
+    zIndex: 1,
+  },
+});
