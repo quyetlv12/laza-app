@@ -26,7 +26,7 @@ const Card = ({ item, page }) => {
     >
       <View>
         <Image
-          source={{ uri: item.img }}
+          source={{ uri: item.thumbnail }}
           style={{ width: "100%", height: 300 }}
           className="rounded-2xl mb-2"
         />

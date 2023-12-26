@@ -1,43 +1,79 @@
 import React, { useEffect, useState } from "react";
 import {
+  Alert,
   Image,
   SafeAreaView,
   ScrollView,
+  StyleSheet,
   Text,
   TouchableOpacity,
   View,
 } from "react-native";
 import * as IconsOutline from "react-native-heroicons/outline";
-import TextStyle from "../components/text";
-import { CART } from "../configs";
-import Button from "../components/button";
-import { StyleSheet } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
-import { addToCart, productsInCart } from "../redux/slices/cartSlice";
-import { Alert } from "react-native";
+import Button from "../components/button";
+import TextStyle from "../components/text";
+import { CART, DG, SC } from "../configs";
+import {
+  addProductAsync,
+  getProductAsync,
+  productsInCart,
+  updateItemAsync,
+} from "../redux/slices/cartSlice";
+import { useToast } from "react-native-toast-notifications";
+import { unwrapResult } from "@reduxjs/toolkit";
 
 const DetailProduct = ({ navigation, route }) => {
+  const toast = useToast();
   const { item } = route.params;
   const [size, setSize] = useState(null);
   const [imageSelect, setImageSelect] = useState("");
   const [quantity, setQuantity] = useState(1);
   const products = useSelector(productsInCart);
   const dispatch = useDispatch();
+  const [pre, setPre] = useState(0);
+  const reactive = () => {
+    setPre((pre) => ++pre);
+  };
   const handleChangeImage = (link) => {
     setImageSelect(link);
   };
-  const handleAddToCart = () => {
+  const handleAddToCart = async () => {
     if (!size) {
-      Alert.alert("Please select size !");
+      toast.show("Vui lòng chọn kích thước !", { type: DG });
       return;
     }
-    const _item = {
-      ...item,
-      quantity: quantity,
-      sizeSelect: size,
-    };
-    dispatch(addToCart(_item));
-    Alert.alert("Thêm vào giỏ hàng thành công !");
+    const findItem = products.find(
+      (_elt) =>
+        Number(_elt.product_id) === Number(item?.id) && _elt.size === size
+    );
+    if (findItem && findItem.size === size) {
+      const item = {
+        quantity: findItem.quantity + quantity,
+      };
+      const resultAction = await dispatch(
+        updateItemAsync({ id: findItem.id, item })
+      );
+      const originalPromiseResult = unwrapResult(resultAction);
+      if (originalPromiseResult.status === 200) {
+        toast.show("Thêm vào giỏ hàng thành công", { type: SC });
+        setQuantity(1);
+        reactive();
+      }
+    } else {
+      const __item = {
+        product_id: item.id,
+        quantity: quantity,
+        size: size,
+      };
+      const resultAction = await dispatch(addProductAsync(__item));
+      const originalPromiseResult = unwrapResult(resultAction);
+      if (originalPromiseResult.status === 201) {
+        toast.show("Thêm sản phẩm thành công", { type: SC });
+        setQuantity(1);
+        reactive();
+      }
+    }
   };
   const plusQuantity = () => {
     const qtt = quantity + 1;
@@ -49,7 +85,8 @@ const DetailProduct = ({ navigation, route }) => {
   };
   useEffect(() => {
     setImageSelect(item.img);
-  }, []);
+    dispatch(getProductAsync());
+  }, [pre]);
 
   return (
     <SafeAreaView className="bg-white" style={styles.container}>
@@ -74,17 +111,24 @@ const DetailProduct = ({ navigation, route }) => {
               </View>
             </View>
           </View>
-          {imageSelect && (
+          {/* {imageSelect && (
             <Image
               source={{ uri: imageSelect }}
               style={{ width: "100%", height: 300 }}
             />
-          )}
+          )} */}
+          <Image
+          
+            source={{ uri: item.thumbnail }}
+            style={{ width: "100%", height: 300 }}
+          />
         </View>
         <View className="flex flex-row mt-2 px-4">
           <View className="w-9/12">
             <Text className="text-[#8F959E] text-[13px] mb-2">
-              Men's Printed Pullover Hoodie
+              {item.cate_id
+                ? item.categories.cate_name
+                : "Không có danh mục sản phẩm"}
             </Text>
             <Text className="font-bold text-[#1D1E20] text-[22px]">
               {item.name}
@@ -103,7 +147,7 @@ const DetailProduct = ({ navigation, route }) => {
             showsHorizontalScrollIndicator={false}
             className="gap-2"
           >
-            {item.listImage.map((img, index) => (
+            {/* {JSON.parse(item.images).map((img, index) => (
               <TouchableOpacity
                 key={index}
                 onPress={() => handleChangeImage(img)}
@@ -114,7 +158,7 @@ const DetailProduct = ({ navigation, route }) => {
                   className={`rounded-lg shadow-lg border-4`}
                 />
               </TouchableOpacity>
-            ))}
+            ))} */}
           </ScrollView>
         </View>
         {/* ========================== size ================== */}
@@ -125,11 +169,11 @@ const DetailProduct = ({ navigation, route }) => {
           </TouchableOpacity>
         </View>
         <View className="gap-1 w-full flex flex-row px-5">
-          {item?.size.map((_size, index) => (
+          {item.size.map((_size, index) => (
             <TouchableOpacity
               activeOpacity={0.7}
               className={`w-3/12 bg-[#F5F6FA] h-20 rounded-xl ${
-                size === _size && "border-2 border-indigo-500"
+                size && size === _size && "border-2 border-indigo-500"
               }`}
               key={_size}
               onPress={() => setSize(_size)}
@@ -178,7 +222,7 @@ const DetailProduct = ({ navigation, route }) => {
           content={"Thêm vào giỏ hàng"}
           onPress={handleAddToCart}
           w={"w-full"}
-          px={'px-2'}
+          px={"px-2"}
         />
       </View>
     </SafeAreaView>

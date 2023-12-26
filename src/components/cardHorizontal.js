@@ -5,12 +5,12 @@ const CardHorizontal = ({item , deleteItem , plusQuantity , minusQuantity}) => {
     return (
         <View className="bg-[#FEFEFE] py-5 px-2 rounded-lg shadow-sm mb-5 mt-2">
             <View className='flex flex-row gap-4 items-center'>
-                <Image source={{uri : item?.img}} className="w-20 h-20 rounded-lg" />
+                <Image source={{uri : item.products?.thumbnail}} className="w-20 h-20 rounded-lg" />
                 <View style={{flexGrow:1,width:0,flexDirection:"column",justifyContent:"center"}}>
                     <View>
-                        <Text className="font-bold mb-2">{item?.name} - {item.sizeSelect}</Text>
+                        <Text className="font-bold mb-2">{item.products?.name} - {item?.size}</Text>
                     </View>
-                    <Text className="text-[11px] text-[#8F959E] mb-2">${item?.price}</Text>
+                    <Text className="text-[11px] text-[#8F959E] mb-2">${item.products?.price * item?.quantity}</Text>
                     <View className="flex flex-row justify-between">
                         <View className="flex flex-row items-center gap-5">
                             <TouchableOpacity onPress={() => plusQuantity(item)}>

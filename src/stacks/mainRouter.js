@@ -20,7 +20,7 @@ import { productsInCart } from "../redux/slices/cartSlice";
 const Tab = createBottomTabNavigator();
 const MainRouter = () => {
     const products = useSelector(productsInCart)
-
+    
   return (
     <NavigationContainer>
         <Tab.Navigator
@@ -47,9 +47,9 @@ const MainRouter = () => {
                 );
               } else if (route.name === USER_STACK) {
                 return !focused ? (
-                  <IconsOutline.UserIcon color={"#9775FA"} />
+                  <IconsOutline.Cog6ToothIcon color={"#9775FA"} />
                 ) : (
-                  <IconsSolid.UserIcon color={"#9775FA"} />
+                  <IconsSolid.Cog6ToothIcon color={"#9775FA"} />
                 );
               }
             },
@@ -67,18 +67,18 @@ const MainRouter = () => {
           <Tab.Screen
             name={HOME_STACK}
             component={HomeStack}
-            options={{ title: "Home" }}
+            options={{ title: "Trang chủ" }}
           />
-          <Tab.Screen name={FAVOURITE} component={Favourite} />
+          <Tab.Screen name={FAVOURITE} component={Favourite}  options={{ title: "Yêu thích"}} />
           <Tab.Screen
             name={CART_STACK}
             component={CartStack}
-            options={{ title: "Cart" ,  tabBarBadge: products.length }}
+            options={{ title: "Giở hàng" ,  tabBarBadge: products.length }}
           />
           <Tab.Screen
             name={USER_STACK}
             component={UserStack}
-            options={{ title: "Profile" }}
+            options={{ title: "Cài đặt" }}
           />
           {/* <Tab.Screen  /> */}
         </Tab.Navigator>

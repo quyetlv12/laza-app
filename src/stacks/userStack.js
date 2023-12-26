@@ -8,7 +8,6 @@ import { useLogged } from "../hooks";
 const Stack = createStackNavigator();
 const UserStack = () => {
   const { status } = useLogged();
-  console.log("status" , status);
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
       {status ? (

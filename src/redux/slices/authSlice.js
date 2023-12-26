@@ -2,25 +2,17 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 // import { fetchCount } from './counterAPI';
 
 const initialState = {
-  logged : false,
+  logged : true,
   user : '',
   token : ''
 };
 
-// export const incrementAsync = createAsyncThunk(
-//   'counter/fetchCount',
-//   async amount => {
-//     const response = await fetchCount(amount);
-//     return response.data;
-//   },
-// );
 
 export const authSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
     login : state => {
-       console.log("state" , state);
     }
   },
 //   extraReducers: builder => {

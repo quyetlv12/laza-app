@@ -1,5 +1,7 @@
+import React from 'react';
 import { Switch } from "react-native"
 import * as IconsOutline from "react-native-heroicons/outline";
+import { useToast } from "react-native-toast-notifications";
 
 export const HOME = 'Home'
 export const HOME_STACK = 'HomeStack'
@@ -151,3 +153,7 @@ export const Setting = [
     },
     // Add more brands and their logo URLs as needed
   ];
+
+  export const SC = 'success'
+  export const DG = 'danger'
+  export const WN = 'warning'

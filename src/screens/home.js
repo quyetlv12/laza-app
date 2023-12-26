@@ -7,9 +7,31 @@ import { CART, CATEGORY_ITEMS, PROFILE, data, fashionBrands } from "../configs";
 import { Keyboard } from "react-native";
 import DirectionalTop from "../components/directionalTop";
 import { selectCount } from "../redux/slices/authSlice";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
+import HttpClient from "../auth/Client";
+import { getAllProducts, products } from "../redux/slices/productSlice";
+import { useIsFocused } from "@react-navigation/native";
+import { getProductAsync } from "../redux/slices/cartSlice";
 
 const Home = ({ navigation, route }) => {
+  const isFocused = useIsFocused();
+  const dispatch = useDispatch()
+  const productsSlice = useSelector(products)
+  useEffect(() => {
+   const getProducts = async () =>{
+    const res = await HttpClient.get('/products')
+    if (res.status === 200) {
+      dispatch(getAllProducts(res.data))
+    }
+   }
+   
+   if (isFocused) {
+    getProducts()
+    dispatch(getProductAsync());
+   }
+  }, [isFocused])
+  
   return (
     <SafeAreaView className="bg-white">
       <View className="px-2">
@@ -70,7 +92,7 @@ const Home = ({ navigation, route }) => {
             </View>
             <View className="flex flex-row flex-wrap">
               {
-                data.map((item , index) => (
+                productsSlice.map((item , index) => (
                   <Card key={item.id} item={item} />
                 ))
               }
