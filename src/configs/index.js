@@ -131,26 +131,26 @@ export const Setting = [
   ]
 
  export const fashionBrands = [
-    {
-      id: 1,
-      name: 'Nike',
-      logo: 'https://upload.wikimedia.org/wikipedia/commons/9/94/Old_Nike_logo.jpg',
-    },
-    {
-      id: 2,
-      name: 'Adidas',
-      logo: 'https://cdn-copck.nitrocdn.com/WwybsgZzWtFojdWowVAajDJCKuMAXRVm/assets/images/optimized/rev-834f560/wp-content/uploads/2023/04/y-nghia-logo-adidas.jpg',
-    },
-    {
-      id: 3,
-      name: 'Gucci',
-      logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/79/1960s_Gucci_Logo.svg/2560px-1960s_Gucci_Logo.svg.png',
-    },
-    {
-      id: 4,
-      name: 'Louis Vuitton',
-      logo: 'https://d1csarkz8obe9u.cloudfront.net/posterpreviews/louis-vuitton-logo-design-template-78ffdfd5a7454ac656ed6782e551a9df_screen.jpg?ts=1651806671',
-    },
+    // {
+    //   id: 1,
+    //   name: 'Nike',
+    //   logo: 'https://upload.wikimedia.org/wikipedia/commons/9/94/Old_Nike_logo.jpg',
+    // },
+    // {
+    //   id: 2,
+    //   name: 'Adidas',
+    //   logo: 'https://cdn-copck.nitrocdn.com/WwybsgZzWtFojdWowVAajDJCKuMAXRVm/assets/images/optimized/rev-834f560/wp-content/uploads/2023/04/y-nghia-logo-adidas.jpg',
+    // },
+    // {
+    //   id: 3,
+    //   name: 'Gucci',
+    //   logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/79/1960s_Gucci_Logo.svg/2560px-1960s_Gucci_Logo.svg.png',
+    // },
+    // {
+    //   id: 4,
+    //   name: 'Louis Vuitton',
+    //   logo: 'https://d1csarkz8obe9u.cloudfront.net/posterpreviews/louis-vuitton-logo-design-template-78ffdfd5a7454ac656ed6782e551a9df_screen.jpg?ts=1651806671',
+    // },
     // Add more brands and their logo URLs as needed
   ];
 

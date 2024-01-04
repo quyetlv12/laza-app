@@ -94,11 +94,8 @@ export const cartSlice = createSlice({
     // --- Xử lý trong reducer với case pending / fulfilled / rejected ---
     builder
       .addCase(getProductAsync.pending, (state) => {
-        //  state.status = 'loading';
-        console.log("đang lấy sản phẩm");
       })
       .addCase(getProductAsync.fulfilled, (state, action) => {
-        console.log("lấy sản phẩm thành công !");
         state.products = action.payload;
       });
   },

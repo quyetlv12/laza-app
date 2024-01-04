@@ -1,107 +1,129 @@
-import React from "react";
-import { FlatList, Image, SafeAreaView, ScrollView, StatusBar, Text, TextInput, TouchableOpacity, View } from "react-native";
-import * as IconsOutline from "react-native-heroicons/outline";
-import Card from "../components/card";
-import TextStyle from "../components/text";
-import { CART, CATEGORY_ITEMS, PROFILE, data, fashionBrands } from "../configs";
-import { Keyboard } from "react-native";
-import DirectionalTop from "../components/directionalTop";
-import { selectCount } from "../redux/slices/authSlice";
-import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from "react";
-import HttpClient from "../auth/Client";
-import { getAllProducts, products } from "../redux/slices/productSlice";
 import { useIsFocused } from "@react-navigation/native";
+import React, { useEffect } from "react";
+import {
+  Image,
+  SafeAreaView,
+  ScrollView,
+  StatusBar,
+  TouchableOpacity,
+  View,
+} from "react-native";
+import { useDispatch, useSelector } from "react-redux";
+import HttpClient from "../auth/Client";
+import Card from "../components/card";
+import DirectionalTop from "../components/directionalTop";
+import TextStyle from "../components/text";
+import { CATEGORY_ITEMS, fashionBrands } from "../configs";
 import { getProductAsync } from "../redux/slices/cartSlice";
+import {
+  getAllProducts,
+  getProductsAsync,
+  isLoading,
+  products,
+} from "../redux/slices/productSlice";
+import { isArrayEmpty } from "../utility";
+import CardKeleton from "../components/cardKeleton";
+import Skeleton from "native-base/src/components/composites/Skeleton/Skeleton";
 
 const Home = ({ navigation, route }) => {
   const isFocused = useIsFocused();
-  const dispatch = useDispatch()
-  const productsSlice = useSelector(products)
+  const _NUMBER_SKELETON = 4;
+  const dispatch = useDispatch();
+  const productsSlice = useSelector(products);
+  const isLoadingApp = useSelector(isLoading);
   useEffect(() => {
-   const getProducts = async () =>{
-    const res = await HttpClient.get('/products')
-    if (res.status === 200) {
-      dispatch(getAllProducts(res.data))
+    if (isFocused) {
+      dispatch(getProductsAsync());
+      dispatch(getProductAsync());
     }
-   }
-   
-   if (isFocused) {
-    getProducts()
-    dispatch(getProductAsync());
-   }
-  }, [isFocused])
-  
+  }, [isFocused]);
+
   return (
     <SafeAreaView className="bg-white">
       <View className="px-2">
-      <ScrollView showsVerticalScrollIndicator={false}>
+        <ScrollView showsVerticalScrollIndicator={false}>
           <View>
             <StatusBar barStyle="dark-content" />
           </View>
           <DirectionalTop />
 
           <View className="mb-5">
-          <TextStyle content={'Hello'} type={'bold'} />
-          <TextStyle content={'Welcome to Laza.'} type="subTitle" />
+            <TextStyle content={"Hello"} type={"bold"} />
+            <TextStyle content={"Welcome to Laza."} type="subTitle" />
           </View>
-          {/* SEARCH BOX */}
-          <View className="flex flex-row h-14 gap-2 mb-5">
-            <View className="w-[80%] ">
-              <TextInput placeholder="Search..." className="h-full bg-[#F5F6FA] px-5 rounded-lg" onSubmitEditing={Keyboard.dismiss} sub/>
-            </View>
-            <TouchableOpacity activeOpacity={.7} className="bg-[#9775FA] flex items-center justify-center px-3 rounded-lg">
-              <Text className=""> <IconsOutline.MicrophoneIcon color={'#fff'} /></Text>
-            </TouchableOpacity>
-          </View>
-
           <View className="mb-5">
             <View className="flex flex-row items-center justify-between">
-              <TextStyle content={'Choose Brand'} type="title" />
+              <TextStyle content={"Hãng nổi bật"} type="title" />
               <TouchableOpacity>
-              <TextStyle content={'View all'} type="thin" />
+                <TextStyle content={"View all"} type="thin" />
               </TouchableOpacity>
             </View>
             <View className="mt-5">
-              <ScrollView horizontal={true} className="gap-2" showsHorizontalScrollIndicator={false}>
-                {
-                  fashionBrands.map((item , index) => (
-                    <TouchableOpacity activeOpacity={.7}key={item.id} className="flex flex-row items-center rounded-2xl bg-[#F5F6FA] py-3 px-2" onPress={() => navigation.navigate(CATEGORY_ITEMS , {
-                      cateName: item.name,
-                  })}>
-                  <View className="mr-2 bg-white p-3 rounded-2xl">
-                    <Image
-                      source={{uri : item.logo}}
-                    style={{ width: 30, height: 30 }}
-                    />
-                  </View>
-                  <TextStyle content={item.name} type="brand" />
-                </TouchableOpacity>
-                  ))
-                }
+              <ScrollView
+                horizontal={true}
+                className="gap-2"
+                showsHorizontalScrollIndicator={false}
+              >
+                {isArrayEmpty(fashionBrands)
+                  ? [...Array(_NUMBER_SKELETON)].map((_elt, index) => (
+                      <View
+                        className="mr-2 bg-[#F5F6FA] p-3 rounded-2xl flex flex-row items-center gap-2"
+                        key={index}
+                      >
+                        <Skeleton
+                          borderWidth={1}
+                          borderColor="coolGray.200"
+                          endColor="warmGray.50"
+                          size="20"
+                          rounded="full"
+                        />
+                        <Skeleton.Text className="w-[100px]" />
+                      </View>
+                    ))
+                  : fashionBrands.map((item, index) => (
+                      <TouchableOpacity
+                        activeOpacity={0.7}
+                        key={item.id}
+                        className="flex flex-row items-center rounded-2xl bg-[#F5F6FA] py-3 px-2"
+                        onPress={() =>
+                          navigation.navigate(CATEGORY_ITEMS, {
+                            cateName: item.name,
+                          })
+                        }
+                      >
+                        <View className="mr-2 bg-white p-3 rounded-2xl">
+                          <Image
+                            source={{ uri: item.logo }}
+                            style={{ width: 30, height: 30 }}
+                          />
+                        </View>
+                        <TextStyle content={item.name} type="brand" />
+                      </TouchableOpacity>
+                    ))}
               </ScrollView>
             </View>
           </View>
           {/* //============================== */}
           <View>
             <View className="flex flex-row items-center justify-between mb-5">
-              <TextStyle content='New Arraival' type='title' />
+              <TextStyle content="Sản phẩm nổi bật" type="title" />
               <TouchableOpacity>
-                <TextStyle content={'View all'} type="thin" />
+                <TextStyle content={"View all"} type="thin" />
               </TouchableOpacity>
             </View>
             <View className="flex flex-row flex-wrap">
-              {
-                productsSlice.map((item , index) => (
-                  <Card key={item.id} item={item} />
-                ))
-              }
+              {isArrayEmpty(productsSlice) && isLoadingApp
+                ? [...Array(_NUMBER_SKELETON)].map((item, index) => (
+                    <CardKeleton key={index} />
+                  ))
+                : productsSlice.map((item, index) => (
+                    <Card key={item.id} item={item} />
+                  ))}
             </View>
           </View>
         </ScrollView>
       </View>
-      
-      </SafeAreaView>
+    </SafeAreaView>
   );
 };
 
